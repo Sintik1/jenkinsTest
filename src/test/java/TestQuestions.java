@@ -52,21 +52,25 @@ public class TestQuestions {
         //Запуск хром
         //Запуск хром
         // Логирование версий
-        System.out.println("Setting up WebDriver...");
-        WebDriverManager.chromedriver().setup();
-        System.out.println("ChromeDriver version: " + WebDriverManager.chromedriver().getDownloadedDriverVersion());
+        try {
+            System.out.println("Setting up WebDriver...");
+            WebDriverManager.chromedriver().setup();
+            System.out.println("ChromeDriver version: " + WebDriverManager.chromedriver().getDownloadedDriverVersion());
 
-        ChromeOptions chromeOptions = new ChromeOptions();
-        chromeOptions.addArguments("--headless");
-        chromeOptions.addArguments("--no-sandbox");
-        chromeOptions.addArguments("--disable-dev-shm-usage");
-        chromeOptions.addArguments("--disable-gpu");
-        chromeOptions.addArguments("--remote-allow-origins=*");
+            ChromeOptions chromeOptions = new ChromeOptions();
+            chromeOptions.addArguments("--headless");
+            chromeOptions.addArguments("--no-sandbox");
+            chromeOptions.addArguments("--disable-dev-shm-usage");
+            chromeOptions.addArguments("--disable-gpu");
+            chromeOptions.addArguments("--remote-allow-origins=*");
 
-        driver = new ChromeDriver(chromeOptions);
-        System.out.println("Chrome browser launched successfully.");
-        driver.manage().window().maximize();
-        driver.get(BASE_URI);
+            driver = new ChromeDriver(chromeOptions);
+            System.out.println("Chrome browser launched successfully.");
+            driver.manage().window().maximize();
+            driver.get(BASE_URI);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     @Test
     //Метод проверки соответствия текста ответа в списке с вопросами
