@@ -26,14 +26,20 @@ public class TestTransitInHomePage {
         driver = new FirefoxDriver(firefoxOptions);*/
 
         //Запуск хром
-        WebDriverManager.chromedriver().setup(); // Используем WebDriverManager для управления драйверами
+        // Логирование версий
+        System.out.println("Setting up WebDriver...");
+        WebDriverManager.chromedriver().setup();
+        System.out.println("ChromeDriver version: " + WebDriverManager.chromedriver().getDownloadedDriverVersion());
+
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.addArguments("--headless");
         chromeOptions.addArguments("--no-sandbox");
         chromeOptions.addArguments("--disable-dev-shm-usage");
         chromeOptions.addArguments("--disable-gpu");
         chromeOptions.addArguments("--remote-allow-origins=*");
+
         driver = new ChromeDriver(chromeOptions);
+        System.out.println("Chrome browser launched successfully.");
         driver.manage().window().maximize();
         driver.get(BASE_URI);
     }
