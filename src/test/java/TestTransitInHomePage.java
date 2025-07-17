@@ -41,7 +41,6 @@ public class TestTransitInHomePage {
 
             driver = new ChromeDriver(chromeOptions);
             System.out.println("Chrome browser launched successfully.");
-            driver.manage().window().maximize();
             driver.get(BASE_URI);
         } catch (Exception e) {
             e.printStackTrace();
