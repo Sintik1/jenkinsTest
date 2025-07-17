@@ -108,7 +108,7 @@ public class HeadPage {
 
     public HeadPage(WebDriver driver) {
         this.driver = driver;
-        this.wait=new WebDriverWait(driver,5);
+        this.wait=new WebDriverWait(driver,10);
     }
 
     //Вспомогательный метод для клика
