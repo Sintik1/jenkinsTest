@@ -40,13 +40,13 @@ public class TestFieldOrderInCorrect {
         //Запуск хром
         //Запуск хром
         // Логирование версий
-        try {
+       try {
             System.out.println("Setting up WebDriver...");
             WebDriverManager.chromedriver().setup();
             System.out.println("ChromeDriver version: " + WebDriverManager.chromedriver().getDownloadedDriverVersion());
 
             ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.addArguments("--headless");
+          //  chromeOptions.addArguments("--headless");
             chromeOptions.addArguments("--no-sandbox");
             chromeOptions.addArguments("--disable-dev-shm-usage");
             chromeOptions.addArguments("--disable-gpu");
@@ -124,8 +124,16 @@ public class TestFieldOrderInCorrect {
 
     @After
     public void tearDown(){
-        if(driver!=null){
-            driver.quit();
+        if (driver != null) {
+            try {
+                System.out.println("Закрытие драйвера");
+                driver.quit();
+                System.out.println("Драйвер закрыт");
+            } catch (Exception e) {
+                System.err.println("Ошибка при закрытии драйвера: " + e.getMessage());
+                e.printStackTrace();
+            }
         }
     }
-}
+    }
+
