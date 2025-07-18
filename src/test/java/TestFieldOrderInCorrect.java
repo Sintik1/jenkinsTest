@@ -12,23 +12,23 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 public class TestFieldOrderInCorrect {
     WebDriver driver;
-    private static final String BASE_URI= "https://qa-scooter.praktikum-services.ru/";
+    private static final String BASE_URI = "https://qa-scooter.praktikum-services.ru/";
 
 
     //Вспомогательный метод перехода по кнопке "Заказать" в хедере
-    public void navigateToOrder () {
+    public void navigateToOrder() {
         HeadPage objHeadPage = new HeadPage(driver);
         objHeadPage.clickButtonCookie();
         objHeadPage.clickButtonOrderInHeaderPage();
     }
 
     //Вспомогательный метод генерации данных для не корректного ввода
-    private static String generateIncorrectData(){
+    private static String generateIncorrectData() {
         return RandomStringUtils.randomAlphabetic(5);
     }
 
     @Before
-    public void setup(){
+    public void setup() {
         //Запуск Firefox
         /*WebDriverManager.firefoxdriver().setup();
         FirefoxOptions firefoxOptions = new FirefoxOptions();
@@ -40,13 +40,13 @@ public class TestFieldOrderInCorrect {
         //Запуск хром
         //Запуск хром
         // Логирование версий
-       try {
+        try {
             System.out.println("Setting up WebDriver...");
             WebDriverManager.chromedriver().setup();
             System.out.println("ChromeDriver version: " + WebDriverManager.chromedriver().getDownloadedDriverVersion());
 
             ChromeOptions chromeOptions = new ChromeOptions();
-            chromeOptions.addArguments("--headless");
+            //chromeOptions.addArguments("--headless");
             chromeOptions.addArguments("--no-sandbox");
             chromeOptions.addArguments("--disable-dev-shm-usage");
             chromeOptions.addArguments("--disable-gpu");
@@ -71,7 +71,7 @@ public class TestFieldOrderInCorrect {
         objOrderPage.sendFieldName(generateIncorrectData());
         objOrderPage.clickFieldLastName();
         String actualResult = objOrderPage.checkedIncorrectDataEntry();
-        Assert.assertEquals("Текст ошибки не отобразился",expectedResult,actualResult);
+        Assert.assertEquals("Текст ошибки не отобразился", expectedResult, actualResult);
     }
 
     @Test
@@ -84,8 +84,9 @@ public class TestFieldOrderInCorrect {
         objOrderPage.sendLastName(generateIncorrectData());
         objOrderPage.clickFieldName();
         String actualResult = objOrderPage.checkedIncorrectDataEntry();
-        Assert.assertEquals("Текст ошибки не отобразился",expectedResult,actualResult);
+        Assert.assertEquals("Текст ошибки не отобразился", expectedResult, actualResult);
     }
+
     @Test
     //Негативный сценарий отображения ошибки при не корректном вводе поля "Адрес"
     public void isDisplayedErrorInCorrectSendAdress() {
@@ -96,8 +97,9 @@ public class TestFieldOrderInCorrect {
         objOrderPage.sendFieldAdress(generateIncorrectData());
         objOrderPage.clickFieldName();
         String actualResult = objOrderPage.checkedIncorrectDataEntry();
-        Assert.assertEquals("Текст ошибки не отобразился",expectedResult,actualResult);
+        Assert.assertEquals("Текст ошибки не отобразился", expectedResult, actualResult);
     }
+
     @Test
     //Негативный сценарий отображения ошибки при не корректном вводе поля "Номер телефона"
     public void isDisplayedErrorInCorrectSendPhoneNumber() {
@@ -108,22 +110,23 @@ public class TestFieldOrderInCorrect {
         objOrderPage.sendPhoneNumber(generateIncorrectData());
         objOrderPage.clickFieldName();
         String actualResult = objOrderPage.checkedIncorrectDataEntry();
-        Assert.assertEquals("Текст ошибки не отобразился",expectedResult,actualResult);
+        Assert.assertEquals("Текст ошибки не отобразился", expectedResult, actualResult);
     }
 
     @Test
     //Негативный сценарий отображения ошибки при не выборе станции метро
-    public void isDisplayedErrorNotChoiseMetroStation(){
+    public void isDisplayedErrorNotChoiseMetroStation() {
         String expectedText = "Выберите станцию";
         navigateToOrder();
         OrderPage objOrderPage = new OrderPage(driver);
         objOrderPage.clickButtonNext();
-        String actualResult=objOrderPage.isDisplayedErrorChoiseMetroStation();
-        Assert.assertEquals("Ошибка не отобразилась: ", expectedText,actualResult);
+        String actualResult = objOrderPage.isDisplayedErrorChoiseMetroStation();
+        Assert.assertEquals("Ошибка не отобразилась: ", expectedText, actualResult);
     }
 
-    @After
-    public void tearDown(){
+
+  /*  @After
+    public void tearDown() {
         if (driver != null) {
             try {
                 System.out.println("Закрытие драйвера");
@@ -134,6 +137,11 @@ public class TestFieldOrderInCorrect {
                 e.printStackTrace();
             }
         }
+
+
     }
-    }
+     */
+}
+
+
 
