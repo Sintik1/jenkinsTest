@@ -153,13 +153,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class TestFieldOrderInCorrect {
     WebDriver driver;
     private static final String BASE_URI = "https://qa-scooter.praktikum-services.ru/";
-
+    private Path tempDir;
     // Вспомогательный метод перехода по кнопке "Заказать" в хедере
     public void navigateToOrder() {
         HeadPage objHeadPage = new HeadPage(driver);
@@ -173,7 +174,6 @@ public class TestFieldOrderInCorrect {
     }
 
     @Before
-
     public void setup() {
         try {
             System.out.println("Setting up WebDriver...");
@@ -188,7 +188,7 @@ public class TestFieldOrderInCorrect {
             chromeOptions.addArguments("--remote-allow-origins=*");
 
             // Создаем уникальную временную директорию для профиля
-            Path tempDir = Files.createTempDirectory("chrome-user-data");
+            tempDir = Files.createTempDirectory("chrome-user-data");
             chromeOptions.addArguments("--user-data-dir=" + tempDir.toAbsolutePath().toString());
 
             driver = new ChromeDriver(chromeOptions);
@@ -263,18 +263,26 @@ public class TestFieldOrderInCorrect {
     }
 */
 
-   @After
-   public void tearDown() {
-       if (driver != null) {
-           try {
-               System.out.println("Закрытие драйвера");
-               driver.quit();
-               System.out.println("Драйвер закрыт");
-           } catch (Exception e) {
-               System.err.println("Ошибка при закрытии драйвера: " + e.getMessage());
-               e.printStackTrace();
-           }
-       }
+    @After
+    public void tearDown() {
+        if (driver != null) {
+            driver.quit();
+        }
+        if (tempDir != null) {
+            try {
+                Files.walk(tempDir)
+                        .map(Path::toFile)
+                        .forEach(file -> {
+                            if (!file.delete()) {
+                                System.err.println("Не удалось удалить файл: " + file.getAbsolutePath());
+                            }
+                        });
+                Files.deleteIfExists(tempDir);
+                System.out.println("Временная папка удалена.");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
    }
 
 }
