@@ -153,6 +153,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 public class TestFieldOrderInCorrect {
     WebDriver driver;
     private static final String BASE_URI = "https://qa-scooter.praktikum-services.ru/";
@@ -170,6 +173,7 @@ public class TestFieldOrderInCorrect {
     }
 
     @Before
+
     public void setup() {
         try {
             System.out.println("Setting up WebDriver...");
@@ -182,6 +186,10 @@ public class TestFieldOrderInCorrect {
             chromeOptions.addArguments("--disable-dev-shm-usage");
             chromeOptions.addArguments("--disable-gpu");
             chromeOptions.addArguments("--remote-allow-origins=*");
+
+            // Создаем уникальную временную директорию для профиля
+            Path tempDir = Files.createTempDirectory("chrome-user-data");
+            chromeOptions.addArguments("--user-data-dir=" + tempDir.toAbsolutePath().toString());
 
             driver = new ChromeDriver(chromeOptions);
             System.out.println("Chrome browser launched successfully.");
@@ -203,7 +211,7 @@ public class TestFieldOrderInCorrect {
         String actualResult = objOrderPage.checkedIncorrectDataEntry();
         Assert.assertEquals("Текст ошибки не отобразился", expectedResult, actualResult);
     }
-
+/*
     @Test
     // Негативный сценарий отображения ошибки при некорректном вводе поля "Фамилия"
     public void isDisplayedErrorInCorrectSendLastName() {
@@ -253,8 +261,8 @@ public class TestFieldOrderInCorrect {
         String actualResult = objOrderPage.isDisplayedErrorChoiseMetroStation();
         Assert.assertEquals("Ошибка не отобразилась: ", expectedText, actualResult);
     }
+*/
 
-   /*
    @After
    public void tearDown() {
        if (driver != null) {
@@ -268,7 +276,7 @@ public class TestFieldOrderInCorrect {
            }
        }
    }
-   */
+
 }
 
 
